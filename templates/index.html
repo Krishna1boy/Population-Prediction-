@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Population Prediction</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background: url('https://cdn.glitch.global/f07a013f-d254-47a2-89fe-0ce0b65fa3c7/World-Population-Day-1024x646.jpg?v=1719402909139') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    margin-top: auto; /* Pushes the container down */
+}
+
+.historical-info {
+    width: 100%;
+    text-align: left;
+    margin-top: 20px; /* Adds space between the container and historical info */
+    color: white; /* Sets the text color to white */
+  }
+
+
+h1 {
+  color: #333;
+}
+    
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    text-align: left;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+h2 {
+    color: #333;
+    margin-top: 20px;
+}
+
+#prediction {
+    color: #4CAF50;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Predict Population</h1>
+        <form id="predictionForm">
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" required>
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        <h2>Prediction: <span id="prediction"></span></h2>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#predictionForm').on('submit', function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+
+                $.post('/predict', formData, function(data) {
+                    $('#prediction').text(data.prediction);
+                }).fail(function(response) {
+                    alert('Error: ' + response.responseJSON.error);
+                });
+            });
+        });
+    </script>
+  <br>
+<div class="historical-info">
+  <p>
+  <h1>
+    Population Growth Historical Info
+  </h1>
+  </p>
+  <p>
+    At the dawn of agriculture, about 8000 B.C., the population of the world was approximately 5 million. Over the 8,000-year period up to 1 A.D. it grew to 200 million (some estimate 300 million or even 600, suggesting how imprecise population estimates of early historical periods can be), with a growth rate of under 0.05% per year.
+  </p>
+  <p>
+    A tremendous change occurred with the industrial revolution: whereas it had taken all of human history until around 1800 for world population to reach one billion, the second billion was achieved in only 130 years (1930), the third billion in 30 years (1960), the fourth billion in 15 years (1974), and the fifth billion in only 13 years (1987).
+  </p>
+  <p>
+    During the 20th century alone, the population in the world has grown from 1.65 billion to 6 billion. In 1970, there were roughly half as many people in the world as there are now. Because of declining growth rates, it will now take over 200 years to double again. Wonder how big was the world's population when you were born? Check out this simple wizard or this more elaborated one to find out.
+  </p>
+  <p>
+  <h3>Sources:</h3>
+World Population Prospects: The 2022 Revision - United Nations Population Division
+The World at Six Billion, World Population, Year 0 to near stabilization - United Nations Population Division
+  </p>
+  <p>
+    created by: Kaushik Raj Krishna
+  </p>
+  </div>
+</body>
+</html>
